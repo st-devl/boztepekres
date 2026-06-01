@@ -1,0 +1,301 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../site.config";
+import {
+  hero,
+  tanitim,
+  nedenBiz,
+  programlar,
+  gunlukYasam,
+  galeri,
+  yorumlar,
+  sss,
+  iletisim,
+  modal,
+} from "../data/anasayfa";
+
+const homeLd = {
+  "@context": "https://schema.org",
+  "@type": "Preschool",
+  name: site.name,
+  url: site.url,
+  telephone: site.phone,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.district,
+    addressRegion: "Trabzon",
+    postalCode: site.address.postalCode,
+    addressCountry: "TR",
+  },
+};
+---
+
+<BaseLayout
+  description="Trabzon'da sevgiyle büyüten kaliteli anaokulu eğitimi. Güvenilir, deneyimli öğretmenler ve oyun temelli öğrenme ile çocuklarınız mutlu büyüsün."
+  jsonLd={homeLd}
+>
+  <!-- Pre-registration Modal -->
+  <div class="fixed inset-0 z-[100] items-center justify-center p-gutter" id="modal-overlay">
+    <div class="island-card w-full max-w-[512px] relative animate-in fade-in zoom-in duration-300">
+      <button class="absolute top-4 right-4 text-on-surface-variant hover:text-error transition-colors" onclick="toggleModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{modal.baslik}</h2>
+      <form class="space-y-4" onsubmit={`event.preventDefault(); alert('${modal.basariMesaji}'); toggleModal();`}>
+        <div>
+          <label class="block font-label-md text-label-md text-on-surface-variant mb-1">{modal.alanlar.veliAd}</label>
+          <input class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-primary bg-surface-container-lowest px-4 py-3" placeholder="Adınız ve Soyadınız" required type="text" />
+        </div>
+        <div>
+          <label class="block font-label-md text-label-md text-on-surface-variant mb-1">{modal.alanlar.ogrenciAd}</label>
+          <input class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-primary bg-surface-container-lowest px-4 py-3" placeholder="Çocuğunuzun Adı" required type="text" />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block font-label-md text-label-md text-on-surface-variant mb-1">{modal.alanlar.yasGrubu}</label>
+            <select class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-primary bg-surface-container-lowest px-4 py-3">
+              {modal.yasSecenekleri.map((y) => <option>{y}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class="block font-label-md text-label-md text-on-surface-variant mb-1">{modal.alanlar.telefon}</label>
+            <input class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-primary bg-surface-container-lowest px-4 py-3" placeholder="05XX XXX XX XX" required type="tel" />
+          </div>
+        </div>
+        <div>
+          <label class="block font-label-md text-label-md text-on-surface-variant mb-1">{modal.alanlar.notlar}</label>
+          <textarea class="w-full rounded-lg border border-outline-variant focus:border-primary focus:ring-primary bg-surface-container-lowest px-4 py-3" placeholder="Eklemek istediğiniz bilgiler..." rows="3"></textarea>
+        </div>
+        <button class="w-full pill-button bg-primary text-on-primary font-button text-button mt-4" type="submit">{modal.buton}</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="pt-20">
+    <!-- Hero -->
+    <section class="relative px-gutter py-xl md:py-24 overflow-hidden">
+      <div class="max-w-container-max mx-auto flex flex-col-reverse md:grid md:grid-cols-2 gap-md items-center">
+        <div class="z-10 text-center md:text-left">
+          <h1 class="font-headline-xl text-3xl md:text-headline-xl text-primary mb-6">
+            {hero.baslik}
+          </h1>
+          <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-[512px] mx-auto md:mx-0">
+            {hero.paragraf}
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <button class="pill-button bg-primary text-on-primary font-button text-button shadow-lg" onclick="toggleModal()">{hero.buton1}</button>
+            <a href={`https://wa.me/${site.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener" class="pill-button bg-tertiary-container text-on-tertiary-container font-button text-button">
+              <span class="material-symbols-outlined mr-2">chat</span> {hero.buton2}
+            </a>
+          </div>
+        </div>
+        <div class="relative mb-8 md:mb-0">
+          <div class="absolute -top-10 -right-10 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl animate-pulse"></div>
+          <div class="island-card overflow-hidden p-0 rounded-[40px] border-8 border-white shadow-xl">
+            <img alt={hero.gorselAlt} class="w-full h-full object-cover aspect-[4/3]" src={hero.gorsel} />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tanıtım -->
+    <section class="bg-surface-container-low py-xl px-gutter" id="about">
+      <div class="max-w-[768px] mx-auto text-center">
+        <span class="text-tertiary font-label-md text-label-md uppercase tracking-widest mb-4 block">{tanitim.etiket}</span>
+        <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{tanitim.baslik}</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">{tanitim.paragraf}</p>
+      </div>
+    </section>
+
+    <!-- Neden Biz -->
+    <section class="py-xl px-gutter max-w-container-max mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{nedenBiz.baslik}</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+        {nedenBiz.kartlar.map((k) => (
+          <div class:list={["island-card flex flex-col items-center text-center", k.sinif ?? ""]}>
+            <div class:list={["w-16 h-16 rounded-2xl flex items-center justify-center mb-6", k.renk]}>
+              <span class="material-symbols-outlined text-4xl">{k.ikon}</span>
+            </div>
+            <h3 class="font-headline-md text-xl md:text-headline-md mb-3 text-on-surface">{k.baslik}</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">{k.aciklama}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Programlar -->
+    <section class="py-xl px-gutter bg-surface-container" id="programs">
+      <div class="max-w-container-max mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{programlar.baslik}</h2>
+          <p class="text-on-surface-variant mt-4">{programlar.altBaslik}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-sm">
+          {programlar.liste.map((p) => (
+            <div class:list={["island-card bg-white p-6 border-t-4", p.renk]}>
+              <h4 class:list={["font-button mb-2", p.textRenk]}>{p.baslik}</h4>
+              <p class="text-sm text-on-surface-variant">{p.aciklama}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Günlük Yaşam -->
+    <section class="py-xl px-gutter max-w-container-max mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{gunlukYasam.baslik}</h2>
+      </div>
+      <div class="relative">
+        <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-primary-container -translate-y-1/2 z-0"></div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-md relative z-10">
+          {gunlukYasam.adimlar.map((a) => (
+            <div class="island-card text-center flex flex-col items-center">
+              <div class:list={["w-12 h-12 rounded-full flex items-center justify-center font-bold mb-4", a.renk]}>{a.saat}</div>
+              <h4 class="font-headline-md mb-2">{a.baslik}</h4>
+              <p class="text-on-surface-variant text-sm">{a.aciklama}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Galeri -->
+    <section class="py-xl px-gutter bg-surface-container-high" id="gallery">
+      <div class="max-w-container-max mx-auto">
+        <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{galeri.baslik}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {galeri.gorseller.map((g) => (
+            <div class="aspect-square rounded-2xl overflow-hidden shadow-md">
+              <img class="w-full h-full object-cover" alt={g.alt} src={g.src} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Yorumlar -->
+    <section class="py-xl px-gutter max-w-container-max mx-auto">
+      <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{yorumlar.baslik}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+        {yorumlar.liste.map((y) => (
+          <div class="island-card italic">
+            <p class="mb-6 text-on-surface-variant">"{y.metin}"</p>
+            <div class="flex items-center gap-4">
+              <div class:list={["w-12 h-12 rounded-full flex items-center justify-center font-bold", y.renkBg, y.renkText]}>{y.harf}</div>
+              <div>
+                <p class="font-bold">{y.ad}</p>
+                <p class="text-sm opacity-70">{y.rol}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- SSS -->
+    <section class="py-xl px-gutter bg-surface-container-low">
+      <div class="max-w-[672px] mx-auto">
+        <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{sss.baslik}</h2>
+        <div class="space-y-4">
+          {sss.sorular.map((s) => (
+            <details class="island-card group p-0 overflow-hidden" open={s.acik}>
+              <summary class="p-6 cursor-pointer list-none flex justify-between items-center font-button text-button text-primary">
+                {s.soru}
+                <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+              </summary>
+              <div class="px-6 pb-6 text-on-surface-variant font-body-md">{s.cevap}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- İletişim -->
+    <section class="py-xl px-gutter max-w-container-max mx-auto" id="contact">
+      <div class="grid md:grid-cols-2 gap-xl items-start">
+        <div>
+          <h2 class="font-headline-lg text-2xl md:text-headline-lg text-on-surface mb-6 text-center">{iletisim.baslik}</h2>
+          <div class="space-y-8">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined">call</span>
+              </div>
+              <div>
+                <p class="font-bold">Telefon</p>
+                <a class="text-on-surface-variant hover:text-primary transition-colors" href={`tel:${site.phone.replace(/\s/g, "")}`}>{site.phonePretty}</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-tertiary/10 rounded-full flex items-center justify-center text-tertiary">
+                <span class="material-symbols-outlined">chat</span>
+              </div>
+              <div>
+                <p class="font-bold">WhatsApp</p>
+                <a class="text-on-surface-variant hover:text-tertiary transition-colors" href={`https://wa.me/${site.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener">Hızlı Mesaj Gönder</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center text-secondary">
+                <span class="material-symbols-outlined">location_on</span>
+              </div>
+              <div>
+                <p class="font-bold">Adres</p>
+                <p class="text-on-surface-variant">{site.address.street}, {site.address.district}, {site.address.city}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="island-card p-0 overflow-hidden h-[400px] border-4 border-white shadow-xl">
+          <img alt={iletisim.haritaAlt} class="w-full h-full object-cover" src={iletisim.haritaGorsel} />
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Mobil Alt Nav -->
+  <button class="lg:hidden fixed bottom-24 right-4 z-[60] w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform" onclick="toggleModal()">
+    <span class="material-symbols-outlined">app_registration</span>
+  </button>
+  <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 px-4 pb-2 bg-surface shadow-[0_-4px_10px_rgba(0,0,0,0.05)] lg:hidden z-50 rounded-t-xl">
+    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href={`tel:${site.phone.replace(/\s/g, "")}`}>
+      <span class="material-symbols-outlined">call</span>
+      <span class="font-label-md text-label-md">Ara</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-95 transition-transform" href={`https://wa.me/${site.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener">
+      <span class="material-symbols-outlined">chat</span>
+      <span class="font-label-md text-label-md">WhatsApp</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="#contact">
+      <span class="material-symbols-outlined">location_on</span>
+      <span class="font-label-md text-label-md">Konum</span>
+    </a>
+  </nav>
+</BaseLayout>
+
+<script>
+  function toggleModal() {
+    const overlay = document.getElementById('modal-overlay');
+    if (!overlay) return;
+    overlay.classList.toggle('active');
+    document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : 'auto';
+  }
+  (window as any).toggleModal = toggleModal;
+
+  document.getElementById('modal-overlay')?.addEventListener('click', function(e) {
+    if (e.target === this) toggleModal();
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = (this as HTMLAnchorElement).getAttribute('href');
+      if (!href) return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>

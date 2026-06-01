@@ -1,0 +1,120 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../site.config";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = (d: Date) => d.toLocaleDateString("tr-TR", { year: "numeric", month: "long", day: "numeric" });
+
+const ld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.publishDate.toISOString(),
+    dateModified: (post.data.updatedDate ?? post.data.publishDate).toISOString(),
+    author: { "@type": "Person", name: post.data.author },
+    publisher: {
+      "@type": "Organization",
+      name: site.legalName,
+      logo: { "@type": "ImageObject", url: `${site.url}/favicon.svg` },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${site.url}/blog/${post.id}` },
+    keywords: post.data.tags.join(", "),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: site.url },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${site.url}/blog` },
+      { "@type": "ListItem", position: 3, name: post.data.title, item: `${site.url}/blog/${post.id}` },
+    ],
+  },
+];
+
+const related = (await getCollection("blog", ({ data }) => !data.draft))
+  .filter((p) => p.id !== post.id)
+  .slice(0, 2);
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  keywords={post.data.tags}
+  jsonLd={ld}
+>
+  <article>
+    <header class="relative overflow-hidden">
+      <div class="blob bg-brand-200 w-[400px] h-[400px] -top-32 -right-32"></div>
+      <div class="container-x relative z-10 pt-16 pb-8 md:pt-24 md:pb-10 max-w-3xl">
+        <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
+          <ol class="flex gap-2 items-center">
+            <li><a href="/" class="hover:text-brand-600">Ana Sayfa</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href="/blog" class="hover:text-brand-600">Blog</a></li>
+          </ol>
+        </nav>
+        <div class="flex flex-wrap gap-2 mt-6">
+          {post.data.tags.map((t) => (
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-50 text-brand-700">{t}</span>
+          ))}
+        </div>
+        <h1 class="font-display font-bold text-3xl md:text-5xl mt-4 leading-tight">{post.data.title}</h1>
+        <p class="mt-4 text-lg text-ink-700">{post.data.description}</p>
+        <div class="mt-6 flex items-center gap-4 text-sm text-ink-500">
+          <span>{post.data.author}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={post.data.publishDate.toISOString()}>{fmt(post.data.publishDate)}</time>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-x pb-16 max-w-3xl">
+      <div class="aspect-[16/9] rounded-3xl bg-gradient-to-br from-brand-100 via-pink-soft to-sky-soft grid place-items-center text-8xl shadow-md" aria-hidden="true">
+        {post.data.coverEmoji}
+      </div>
+      <div class="prose prose-lg mt-10 max-w-none
+                  prose-headings:font-display prose-headings:text-ink-900
+                  prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4
+                  prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+                  prose-p:text-ink-700 prose-p:leading-relaxed
+                  prose-a:text-brand-600 prose-a:no-underline hover:prose-a:underline
+                  prose-strong:text-ink-900
+                  prose-ul:text-ink-700 prose-li:my-1
+                  prose-hr:border-orange-100">
+        <Content />
+      </div>
+    </div>
+
+    {related.length > 0 && (
+      <section class="container-x pb-20">
+        <h2 class="font-display font-bold text-2xl mb-6">Diğer yazılarımız</h2>
+        <div class="grid md:grid-cols-2 gap-5">
+          {related.map((p) => (
+            <a href={`/blog/${p.id}`} class="card group flex gap-4 items-start">
+              <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-100 to-pink-soft grid place-items-center text-3xl flex-shrink-0" aria-hidden="true">
+                {p.data.coverEmoji}
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-base leading-tight group-hover:text-brand-600">{p.data.title}</h3>
+                <p class="mt-1 text-sm text-ink-500 line-clamp-2">{p.data.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>

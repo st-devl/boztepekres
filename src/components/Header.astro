@@ -1,0 +1,73 @@
+---
+import { site } from "../site.config";
+---
+
+<!-- Mobile Menu Overlay -->
+<div class="animate-in fade-in slide-in-from-top duration-300" id="mobile-menu">
+  <div class="flex justify-between items-center mb-8">
+    <div class="font-headline-md text-headline-md font-bold text-primary">Trabzon Preschool</div>
+    <button class="text-primary" onclick="toggleMobileMenu()">
+      <span class="material-symbols-outlined text-3xl">close</span>
+    </button>
+  </div>
+  <nav class="flex flex-col gap-6 overflow-y-auto pb-8">
+    <a class="text-xl font-headline-md text-on-surface" href="#programs" onclick="toggleMobileMenu()">Programlar</a>
+    <a class="text-xl font-headline-md text-on-surface" href="#about" onclick="toggleMobileMenu()">Hakkımızda</a>
+    <div class="space-y-4">
+      <span class="text-xl font-headline-md text-on-surface flex items-center gap-2">
+        Faaliyetler <span class="material-symbols-outlined">expand_more</span>
+      </span>
+      <div class="pl-4 flex flex-col gap-3 border-l-2 border-primary-container">
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="/faaliyetler" onclick="toggleMobileMenu()">Sanat Atölyeleri</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="/faaliyetler" onclick="toggleMobileMenu()">Spor Aktiviteleri</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="/faaliyetler" onclick="toggleMobileMenu()">Gezi &amp; Gözlem</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors" href="/faaliyetler" onclick="toggleMobileMenu()">Özel Günler</a>
+      </div>
+    </div>
+    <a class="text-xl font-headline-md text-on-surface" href="#gallery" onclick="toggleMobileMenu()">Galeri</a>
+    <a class="text-xl font-headline-md text-on-surface" href="#contact" onclick="toggleMobileMenu()">İletişim</a>
+    <div class="mt-4">
+      <button class="w-full pill-button bg-primary text-on-primary font-button text-button shadow-lg" onclick="toggleModal(); toggleMobileMenu();">
+        Ön Kayıt Yap
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 glass-header shadow-sm">
+  <nav class="flex justify-between items-center px-gutter py-4 w-full max-w-container-max mx-auto">
+    <a href="/" class="font-headline-md text-headline-md font-bold text-primary">Trabzon Preschool</a>
+    <div class="hidden lg:flex gap-8 items-center">
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-button text-button" href="#programs">Programlar</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-button text-button" href="#about">Hakkımızda</a>
+      <div class="dropdown relative">
+        <button class="flex items-center text-on-surface-variant hover:text-primary transition-colors font-button text-button gap-1">
+          Faaliyetler <span class="material-symbols-outlined text-sm">expand_more</span>
+        </button>
+        <div class="dropdown-content">
+          <a class="block px-4 py-3 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="/faaliyetler">Sanat Atölyeleri</a>
+          <a class="block px-4 py-3 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="/faaliyetler">Spor Aktiviteleri</a>
+          <a class="block px-4 py-3 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="/faaliyetler">Gezi &amp; Gözlem</a>
+          <a class="block px-4 py-3 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary transition-colors" href="/faaliyetler">Özel Günler</a>
+        </div>
+      </div>
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-button text-button" href="#gallery">Galeri</a>
+      <a class="text-on-surface-variant hover:text-primary transition-colors font-button text-button" href="#contact">İletişim</a>
+      <button class="pill-button bg-primary text-on-primary font-button text-button" onclick="toggleModal()">Ön Kayıt Yap</button>
+    </div>
+    <button class="lg:hidden text-primary" onclick="toggleMobileMenu()">
+      <span class="material-symbols-outlined text-3xl">menu</span>
+    </button>
+  </nav>
+</header>
+
+<script>
+  function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (!mobileMenu) return;
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+  }
+  (window as any).toggleMobileMenu = toggleMobileMenu;
+</script>

@@ -1,0 +1,238 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../site.config";
+
+const faqs = [
+  { q: "Kayıtlar ne zaman başlar?", a: "Yıl boyunca kayıt alıyoruz. 2026-2027 dönemi için kontenjanlar Mart ayında dolmaya başlar, erken başvuru önerilir." },
+  { q: "Deneme günü uygulanır mı?", a: "Evet. Kayıt öncesi çocuğunuz ücretsiz 1 günlük deneme yapabilir, ortama alışmasını destekleriz." },
+  { q: "Yemek menüsü nasıl?", a: "Diyetisyen onaylı menü uygulanır. Kahvaltı, öğle yemeği, ikindi kahvaltısı dahildir. Alerjik durumlar için bireysel menü çıkarılır." },
+  { q: "Servis hizmeti var mı?", a: "Boztepe, Ortahisar ve merkez ilçe çevresinde servis hizmetimiz vardır. Detaylar için bizi arayın." },
+];
+
+const ld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "İletişim - Boztepe Kreş",
+    url: `${site.url}/iletisim`,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+
+const mapsQuery = encodeURIComponent(`${site.address.street}, ${site.address.district}, ${site.address.city}`);
+---
+
+<BaseLayout
+  title="İletişim ve Randevu - Trabzon Boztepe Kreş"
+  description="Boztepe Kreş iletişim: telefon, adres, harita, online randevu formu. Trabzon Boztepe Ortahisar'da kreş ve anaokulu kayıt bilgileri."
+  keywords={["trabzon kreş iletişim", "boztepe anaokulu adres", "trabzon kreş randevu", "trabzon kreş kayıt"]}
+  jsonLd={ld}
+>
+  <section class="relative overflow-hidden">
+    <div class="blob bg-sky-soft w-[400px] h-[400px] -top-32 -left-32"></div>
+    <div class="container-x relative z-10 pt-16 pb-8 md:pt-24 md:pb-10">
+      <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
+        <ol class="flex gap-2 items-center">
+          <li><a href="/" class="hover:text-brand-600">Ana Sayfa</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-ink-900 font-medium">İletişim</li>
+        </ol>
+      </nav>
+      <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl mt-5 max-w-3xl leading-tight">
+        Sizinle <span class="text-brand-600">tanışmak</span> için sabırsızlanıyoruz
+      </h1>
+      <p class="mt-5 text-lg text-ink-700 max-w-2xl">
+        Formu doldurun ya da bizi arayın; 24 saat içinde size dönüş yapalım.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-x pb-12">
+    <div class="grid lg:grid-cols-5 gap-6">
+      <!-- Form -->
+      <div class="lg:col-span-3 card !p-6 md:!p-8">
+        <h2 class="font-display font-bold text-2xl">Randevu / Bilgi Formu</h2>
+        <p class="text-sm text-ink-500 mt-1">Tüm alanlar zorunludur.</p>
+        <form
+          class="mt-6 grid gap-4"
+          action={`mailto:${site.email}`}
+          method="POST"
+          enctype="text/plain"
+          name="randevu"
+        >
+          <div class="grid sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm font-medium text-ink-900">Ad Soyad</span>
+              <input
+                type="text"
+                name="ad_soyad"
+                required
+                autocomplete="name"
+                class="mt-1.5 w-full rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent"
+                placeholder="Adınız Soyadınız"
+              />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-ink-900">Telefon</span>
+              <input
+                type="tel"
+                name="telefon"
+                required
+                autocomplete="tel"
+                inputmode="tel"
+                class="mt-1.5 w-full rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent"
+                placeholder="0 5__ ___ __ __"
+              />
+            </label>
+          </div>
+          <label class="block">
+            <span class="text-sm font-medium text-ink-900">E-posta</span>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="mt-1.5 w-full rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent"
+              placeholder="ornek@email.com"
+            />
+          </label>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <label class="block">
+              <span class="text-sm font-medium text-ink-900">Çocuğun Yaşı</span>
+              <select
+                name="cocuk_yas"
+                required
+                class="mt-1.5 w-full rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+              >
+                <option value="">Seçiniz</option>
+                <option>0-1 yaş (Bebek Grubu)</option>
+                <option>1-2 yaş (Yürü Grubu)</option>
+                <option>2-3 yaş (Kâşif Grubu)</option>
+                <option>3-4 yaş</option>
+                <option>4-5 yaş</option>
+                <option>5-6 yaş</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-ink-900">Konu</span>
+              <select
+                name="konu"
+                required
+                class="mt-1.5 w-full rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+              >
+                <option value="">Seçiniz</option>
+                <option>Tur randevusu almak istiyorum</option>
+                <option>Kayıt bilgisi istiyorum</option>
+                <option>Fiyat bilgisi istiyorum</option>
+                <option>Diğer</option>
+              </select>
+            </label>
+          </div>
+          <label class="block">
+            <span class="text-sm font-medium text-ink-900">Mesajınız</span>
+            <textarea
+              name="mesaj"
+              rows="4"
+              class="mt-1.5 w-full rounded-xl border border-orange-100 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent"
+              placeholder="Eklemek istediğiniz bilgi..."
+            ></textarea>
+          </label>
+
+          <label class="flex items-start gap-3 text-xs text-ink-700">
+            <input type="checkbox" required class="mt-1 w-4 h-4 rounded text-brand-500 focus:ring-brand-400" />
+            <span>
+              <a href="#" class="text-brand-600 underline">KVKK Aydınlatma Metni</a>'ni okudum ve kişisel verilerimin işlenmesine onay veriyorum.
+            </span>
+          </label>
+
+          <button type="submit" class="btn btn-primary w-full sm:w-auto sm:justify-self-start mt-2">
+            Formu Gönder →
+          </button>
+        </form>
+      </div>
+
+      <!-- Contact info -->
+      <aside class="lg:col-span-2 space-y-4">
+        <div class="card">
+          <p class="text-xs font-bold uppercase tracking-wider text-brand-600">Telefon</p>
+          <a href={`tel:${site.phone.replace(/\s/g, "")}`} class="block mt-1 font-display font-bold text-2xl text-ink-900 hover:text-brand-600">
+            {site.phonePretty}
+          </a>
+          <a href={`https://wa.me/${site.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 hover:text-emerald-700">
+            <span aria-hidden="true">💬</span> WhatsApp'tan yaz
+          </a>
+        </div>
+        <div class="card">
+          <p class="text-xs font-bold uppercase tracking-wider text-brand-600">E-posta</p>
+          <a href={`mailto:${site.email}`} class="block mt-1 font-semibold text-ink-900 hover:text-brand-600 break-all">
+            {site.email}
+          </a>
+        </div>
+        <div class="card">
+          <p class="text-xs font-bold uppercase tracking-wider text-brand-600">Adres</p>
+          <address class="not-italic mt-1 text-ink-900 leading-relaxed">
+            <strong>{site.legalName}</strong><br />
+            {site.address.street}<br />
+            {site.address.district} / {site.address.city}
+          </address>
+          <a href={`https://www.google.com/maps/dir/?api=1&destination=${mapsQuery}`} target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:text-brand-700">
+            🗺️ Yol tarifi al
+          </a>
+        </div>
+        <div class="card">
+          <p class="text-xs font-bold uppercase tracking-wider text-brand-600">Çalışma Saatleri</p>
+          <ul class="mt-2 space-y-1 text-sm text-ink-700">
+            <li class="flex justify-between"><span>Pzt – Cum</span><span class="font-semibold text-ink-900">{site.hours.weekdays}</span></li>
+            <li class="flex justify-between"><span>Cumartesi</span><span class="font-semibold text-ink-900">{site.hours.saturday}</span></li>
+            <li class="flex justify-between"><span>Pazar</span><span class="font-semibold text-ink-900">{site.hours.sunday}</span></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="container-x pb-16">
+    <div class="rounded-3xl overflow-hidden shadow-lg border border-orange-100 aspect-[16/9] md:aspect-[21/9] bg-orange-50">
+      <iframe
+        title="Boztepe Kreş Konum Haritası"
+        src={`https://maps.google.com/maps?q=${mapsQuery}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+        width="100%"
+        height="100%"
+        style="border:0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container-x max-w-3xl mx-auto">
+      <div class="text-center">
+        <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Sıkça Sorulan Sorular</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl mt-2">Aklınızdaki sorular</h2>
+      </div>
+      <div class="mt-10 space-y-3">
+        {faqs.map((f) => (
+          <details class="card group !p-0 overflow-hidden">
+            <summary class="cursor-pointer list-none flex items-center justify-between p-5 md:p-6 font-semibold text-ink-900">
+              <span>{f.q}</span>
+              <span class="w-8 h-8 rounded-full bg-brand-50 grid place-items-center text-brand-600 group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
+            </summary>
+            <div class="px-5 pb-5 md:px-6 md:pb-6 text-ink-700 leading-relaxed">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../site.config";
+
+// SVG-based placeholder gallery — siz daha sonra gerçek fotoğraflarla değiştirebilirsiniz
+const items = [
+  { title: "Sanat Atölyesi", category: "Etkinlik", color: "from-pink-300 to-rose-400", emoji: "🎨" },
+  { title: "Bahçe Zamanı", category: "Açık Hava", color: "from-emerald-300 to-green-500", emoji: "🌳" },
+  { title: "Müzik Saati", category: "Etkinlik", color: "from-amber-300 to-orange-500", emoji: "🎵" },
+  { title: "Kitap Köşesi", category: "Sınıf", color: "from-sky-300 to-blue-500", emoji: "📚" },
+  { title: "STEM Atölyesi", category: "Etkinlik", color: "from-violet-300 to-purple-500", emoji: "🔬" },
+  { title: "Yemek Saati", category: "Yaşam", color: "from-yellow-300 to-amber-500", emoji: "🍎" },
+  { title: "Drama Sınıfı", category: "Etkinlik", color: "from-fuchsia-300 to-pink-500", emoji: "🎭" },
+  { title: "Bebek Odası", category: "Sınıf", color: "from-rose-200 to-pink-400", emoji: "🍼" },
+  { title: "Doğa Yürüyüşü", category: "Açık Hava", color: "from-lime-300 to-green-500", emoji: "🥾" },
+  { title: "İngilizce Dersi", category: "Eğitim", color: "from-cyan-300 to-blue-500", emoji: "🗣️" },
+  { title: "Spor Saati", category: "Etkinlik", color: "from-orange-300 to-red-500", emoji: "⚽" },
+  { title: "Mezuniyet", category: "Özel Gün", color: "from-amber-200 to-yellow-500", emoji: "🎓" },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  name: "Boztepe Kreş Galerisi",
+  url: `${site.url}/galeri`,
+};
+---
+
+<BaseLayout
+  title="Galeri - Trabzon Boztepe Kreş Fotoğrafları"
+  description="Boztepe Kreş'ten kareler: sınıflarımız, bahçemiz, atölyelerimiz ve çocuklarımızın mutlu anları. Trabzon'un en güzel anaokulu ortamı."
+  keywords={["trabzon kreş fotoğrafları", "boztepe anaokulu galeri", "trabzon anaokulu sınıflar"]}
+  jsonLd={ld}
+>
+  <section class="relative overflow-hidden">
+    <div class="blob bg-pink-soft w-[400px] h-[400px] -top-32 -right-32"></div>
+    <div class="container-x relative z-10 pt-16 pb-12 md:pt-24 md:pb-12">
+      <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
+        <ol class="flex gap-2 items-center">
+          <li><a href="/" class="hover:text-brand-600">Ana Sayfa</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-ink-900 font-medium">Galeri</li>
+        </ol>
+      </nav>
+      <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl mt-5 max-w-3xl leading-tight">
+        Boztepe Kreş'ten <span class="text-brand-600">mutluluk kareleri</span>
+      </h1>
+      <p class="mt-5 text-lg text-ink-700 max-w-2xl">
+        Sınıflarımız, etkinliklerimiz ve çocuklarımızın günlük hayatından kareler. Gerçek fotoğraflar yakında eklenecektir.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-x pb-20">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+      {items.map((item, i) => (
+        <figure class:list={[
+          "group relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br shadow-md hover:shadow-xl transition-all hover:-translate-y-1",
+          item.color,
+          i % 5 === 0 && "md:col-span-2 md:row-span-2 aspect-auto md:aspect-square"
+        ]}>
+          <div class="absolute inset-0 grid place-items-center" aria-hidden="true">
+            <span class:list={[i % 5 === 0 ? "text-8xl md:text-9xl" : "text-5xl md:text-6xl"]}>{item.emoji}</span>
+          </div>
+          <figcaption class="absolute inset-x-0 bottom-0 p-3 md:p-4 bg-gradient-to-t from-black/60 to-transparent text-white">
+            <p class="text-[10px] md:text-xs uppercase tracking-wider opacity-90">{item.category}</p>
+            <p class="font-semibold text-sm md:text-base">{item.title}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="mt-16 card text-center max-w-2xl mx-auto bg-gradient-to-br from-brand-50 to-pink-soft border-brand-100">
+      <h2 class="font-display font-bold text-2xl">Kurumumuzu yerinde görmek ister misiniz?</h2>
+      <p class="mt-3 text-ink-700">Fotoğrafların ötesinde, gerçek ortamı yaşamak için tur randevusu alın.</p>
+      <a href="/iletisim" class="btn btn-primary mt-6">Tur Randevusu Al</a>
+    </div>
+  </section>
+</BaseLayout>

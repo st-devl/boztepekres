@@ -1,0 +1,19 @@
+---
+import { site } from "../site.config";
+---
+
+<!-- Footer -->
+<footer class="w-full pt-lg pb-xl bg-surface-container-low border-t border-outline-variant">
+  <div class="flex flex-col md:flex-row justify-between items-start gap-md px-gutter max-w-container-max mx-auto">
+    <div class="flex flex-col gap-4">
+      <span class="font-headline-md text-headline-md text-primary font-bold">Trabzon Preschool</span>
+      <p class="max-w-xs text-on-surface-variant text-body-md">© 2024 Trabzon Preschool. Yarının Liderlerini Yetiştiriyoruz.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-x-12 gap-y-4">
+      <a class="text-on-surface-variant hover:text-secondary transition-opacity" href="#">Trabzon Merkez, Türkiye</a>
+      <a class="text-on-surface-variant hover:text-secondary transition-opacity" href="#">Harita Yol Tarifi</a>
+      <a class="text-on-surface-variant hover:text-secondary transition-opacity" href={`tel:${site.phone.replace(/\s/g, "")}`}>{site.phonePretty}</a>
+      <a class="text-on-surface-variant hover:text-secondary transition-opacity" href="#">Gizlilik Politikası</a>
+    </div>
+  </div>
+</footer>

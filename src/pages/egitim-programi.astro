@@ -1,0 +1,179 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../site.config";
+import { ageGroups } from "../data/ageGroups";
+
+const detailedActivities: Record<string, string[]> = {
+  "bebek-grubu": [
+    "Duyusal uyaran masaları (dokunma, ses, görme)",
+    "Bebek masajı ve hareket egzersizleri",
+    "Müzikli sallama ve ninni saatleri",
+    "Tutunma ve emekleme refleksleri için güvenli alanlar",
+    "Beslenme ve uyku takibi (bireysel rapor)",
+  ],
+  "yuru-grubu": [
+    "Yürüme ve denge aktiviteleri",
+    "İlk kelimeler için dil aktiviteleri",
+    "Parmak boya, hamur ve duyusal kutu",
+    "Grup oyunları ile sosyal beceri",
+    "Tuvalet eğitimine hazırlık",
+  ],
+  "kasif-grubu": [
+    "Montessori pratik yaşam aktiviteleri",
+    "Sanat atölyesi: resim, kolaj, heykel",
+    "Müzik ve ritim çalışmaları",
+    "Açık hava etkinlikleri (Boztepe doğasında)",
+    "Tuvalet eğitimi tamamlama",
+  ],
+  "anaokulu": [
+    "Okuma-yazmaya hazırlık çalışmaları",
+    "Matematik kavramları, sayı becerileri",
+    "Haftada 5 saat İngilizce (native eğitmen)",
+    "STEM atölyesi: deney, robotik temelleri",
+    "Drama, müzik, beden eğitimi",
+    "Değerler eğitimi ve sosyal duygusal gelişim",
+  ],
+};
+
+const methods = [
+  { title: "Montessori Yaklaşımı", desc: "Çocuğun bağımsız öğrenmesini destekleyen, hazırlanmış öğrenme ortamı." },
+  { title: "Reggio Emilia", desc: "Proje tabanlı, çocuğun yaratıcılığını ve kendi sesini ön plana çıkaran yaklaşım." },
+  { title: "MEB Müfredatı", desc: "Milli Eğitim Bakanlığı onaylı okul öncesi eğitim programı." },
+  { title: "STEM ve STEAM", desc: "Bilim, teknoloji, mühendislik, sanat ve matematik entegre öğrenme." },
+];
+
+const sample = [
+  { time: "07:30 – 08:30", activity: "Karşılama ve serbest oyun" },
+  { time: "08:30 – 09:00", activity: "Kahvaltı" },
+  { time: "09:00 – 10:00", activity: "Türkçe / dil aktiviteleri" },
+  { time: "10:00 – 10:30", activity: "Meyve molası ve oyun" },
+  { time: "10:30 – 11:30", activity: "Sanat / STEM atölyesi" },
+  { time: "11:30 – 12:30", activity: "Açık hava / bahçe zamanı" },
+  { time: "12:30 – 13:15", activity: "Öğle yemeği" },
+  { time: "13:15 – 14:45", activity: "Uyku / sessiz dinlenme" },
+  { time: "14:45 – 15:30", activity: "İngilizce" },
+  { time: "15:30 – 16:00", activity: "İkindi kahvaltısı" },
+  { time: "16:00 – 17:00", activity: "Müzik / drama / beden eğitimi" },
+  { time: "17:00 – 18:30", activity: "Serbest oyun ve uğurlama" },
+];
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Ana Sayfa", item: site.url },
+    { "@type": "ListItem", position: 2, name: "Eğitim Programı", item: `${site.url}/egitim-programi` },
+  ],
+};
+---
+
+<BaseLayout
+  title="Eğitim Programı ve Yaş Grupları - Trabzon Boztepe Anaokulu"
+  description="Boztepe Kreş eğitim programı: 0-6 yaş Montessori, Reggio Emilia ve MEB müfredatı. Yaş gruplarına özel aktiviteler, günlük akış ve İngilizce eğitimi."
+  keywords={["trabzon montessori anaokulu", "trabzon reggio emilia", "anaokulu eğitim programı", "trabzon ingilizce anaokulu"]}
+  jsonLd={ld}
+>
+  <section class="relative overflow-hidden">
+    <div class="blob bg-mint-soft w-[400px] h-[400px] -top-32 -left-32"></div>
+    <div class="container-x relative z-10 pt-16 pb-12 md:pt-24 md:pb-16">
+      <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
+        <ol class="flex gap-2 items-center">
+          <li><a href="/" class="hover:text-brand-600">Ana Sayfa</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-ink-900 font-medium">Eğitim Programı</li>
+        </ol>
+      </nav>
+      <h1 class="font-display font-bold text-4xl md:text-5xl lg:text-6xl mt-5 max-w-3xl leading-tight">
+        Çocuğunuz için <span class="text-brand-600">bilimsel temelli</span> eğitim
+      </h1>
+      <p class="mt-5 text-lg text-ink-700 max-w-2xl">
+        Yaş grubuna özel hazırlanmış müfredatımız Montessori, Reggio Emilia ve MEB programını harmanlar. Her çocuğun bireysel gelişimi takip edilir.
+      </p>
+    </div>
+  </section>
+
+  <!-- Methods -->
+  <section class="container-x">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {methods.map((m) => (
+        <div class="card">
+          <h3 class="font-display font-bold text-base">{m.title}</h3>
+          <p class="mt-2 text-sm text-ink-700 leading-relaxed">{m.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Age groups detailed -->
+  {ageGroups.map((g, idx) => (
+    <section id={g.slug} class:list={["section scroll-mt-24", idx % 2 === 1 && "bg-gradient-to-b from-transparent via-orange-50/40 to-transparent"]}>
+      <div class="container-x grid lg:grid-cols-5 gap-10 items-start">
+        <div class:list={["lg:col-span-2 lg:sticky lg:top-28", idx % 2 === 1 && "lg:order-2"]}>
+          <div class:list={[g.color, "aspect-square rounded-3xl grid place-items-center text-8xl"]} aria-hidden="true">
+            {g.emoji}
+          </div>
+          <div class="mt-5 card">
+            <p class:list={[g.accent, "text-xs font-bold uppercase tracking-wider"]}>{g.ageLabel}</p>
+            <p class="mt-2 font-display font-bold text-2xl">{g.title}</p>
+            <dl class="mt-4 space-y-2 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-ink-500">Öğretmen oranı</dt>
+                <dd class="font-semibold text-ink-900">{g.ratio}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-ink-500">Günlük süre</dt>
+                <dd class="font-semibold text-ink-900">07:30 – 18:30</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        <div class:list={["lg:col-span-3", idx % 2 === 1 && "lg:order-1"]}>
+          <p class:list={[g.accent, "text-sm font-bold uppercase tracking-wider"]}>{g.ageLabel}</p>
+          <h2 class="font-display font-bold text-3xl md:text-4xl mt-2">{g.title}</h2>
+          <p class="mt-4 text-lg text-ink-700 leading-relaxed">{g.long}</p>
+
+          <h3 class="font-display font-bold text-xl mt-8">Etkinlikler ve Kazanımlar</h3>
+          <ul class="mt-4 space-y-3">
+            {detailedActivities[g.slug]?.map((a) => (
+              <li class="flex gap-3">
+                <span class="mt-1 w-5 h-5 rounded-full bg-brand-100 grid place-items-center text-brand-600 text-xs font-bold flex-shrink-0" aria-hidden="true">✓</span>
+                <span class="text-ink-700">{a}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Daily schedule -->
+  <section class="section">
+    <div class="container-x">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider">Günlük Akış</p>
+        <h2 class="font-display font-bold text-3xl md:text-4xl mt-2">Bir gün Boztepe Kreş'te nasıl geçer?</h2>
+        <p class="mt-3 text-ink-700">Örnek günlük programımız — yaş grubuna göre özelleştirilir.</p>
+      </div>
+      <div class="mt-10 max-w-2xl mx-auto card !p-0 overflow-hidden">
+        <ul class="divide-y divide-orange-100">
+          {sample.map((s) => (
+            <li class="flex items-center gap-4 px-5 py-4 hover:bg-brand-50/40 transition-colors">
+              <span class="font-mono text-sm text-brand-700 font-semibold whitespace-nowrap">{s.time}</span>
+              <span class="text-ink-700">{s.activity}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x">
+      <div class="card text-center max-w-3xl mx-auto bg-gradient-to-br from-brand-50 to-mint-soft border-brand-100">
+        <h2 class="font-display font-bold text-2xl md:text-3xl">Programımızı bizzat görmek ister misiniz?</h2>
+        <p class="mt-3 text-ink-700">Sınıflarımızı gezin, öğretmenlerimizle tanışın.</p>
+        <a href="/iletisim" class="btn btn-primary mt-6">Ücretsiz Tur İçin Randevu Al</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

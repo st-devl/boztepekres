@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff7ed"/>
+      <stop offset="100%" stop-color="#fed7aa"/>
+    </linearGradient>
+    <linearGradient id="logo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="980" cy="120" r="80" fill="#fdba74" opacity=".6"/>
+  <circle cx="1100" cy="500" r="120" fill="#fed7aa" opacity=".8"/>
+  <circle cx="120" cy="500" r="100" fill="#fbcfe8" opacity=".6"/>
+  <g transform="translate(80 180)">
+    <rect width="120" height="120" rx="28" fill="url(#logo)"/>
+    <text x="60" y="78" font-family="Fredoka, system-ui, sans-serif" font-weight="700" font-size="80" text-anchor="middle" fill="white">B</text>
+  </g>
+  <text x="80" y="380" font-family="Fredoka, system-ui, sans-serif" font-weight="700" font-size="78" fill="#1a1a2e">Boztepe Kreş</text>
+  <text x="80" y="450" font-family="Quicksand, system-ui, sans-serif" font-weight="600" font-size="38" fill="#3d3d5c">Trabzon'un sevgi dolu anaokulu</text>
+  <text x="80" y="510" font-family="Quicksand, system-ui, sans-serif" font-weight="500" font-size="28" fill="#6b6b8a">0 – 6 yaş · Montessori · Reggio Emilia · MEB</text>
+  <text x="80" y="560" font-family="Quicksand, system-ui, sans-serif" font-weight="600" font-size="24" fill="#ea580c">boztepekres.com</text>
+</svg>
